@@ -1,0 +1,54 @@
+layer:
+  id: "permits"
+  description: |
+      The Department of Building and Safety issues permits for the construction,
+      remodeling, and repair of buildings and structures in the City of Los Angeles.
+      Permits are categorized into building permits, electrical permits, and mechanical
+      permits (which include plumbing, HVAC systems, fire sprinklers, elevators,
+      and pressure vessels). Depending on the complexity of a project, a permit may be
+      issued the same day with Express Permit or e-Permit ("No Plan Check" category),
+      or a permit may require that the plans be reviewed ("Plan Check" category) by a
+      Building and Safety Plan Check personnel.
+  buffer_size: 8
+  datasource:
+    geometry_field: geom
+    query: |
+      (
+        select
+          status_date,
+          issue_date,
+          license_expiration_date,
+          census_tract,
+          tract,
+          zip_code,
+          zone,
+          lot,
+          assessor_parcel,
+          street_suffix,
+          street_name,
+          address_start,
+          address_end,
+          latest_status,
+          pcis_permit,
+          initiating_office,
+          permit_category,
+          permit_type,
+          permit_sub_type,
+          license,
+          license_type,
+          principal_first_name,
+          principal_last_name,
+          applicant_first_name,
+          applicant_last_name,
+          applicant_address_1,
+          contractors_business_name,
+          contractor_address,
+          contractor_city,
+          contractor_state,
+          geom
+        from
+          permits
+        where
+          geom && !bbox! and
+          z(!scale_denominator!) >= 13
+      ) as t

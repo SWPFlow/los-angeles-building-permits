@@ -1,0 +1,18 @@
+tileset:
+  layers:
+    - layers/permits/permits.yaml
+  name: LABuildingPermits
+  version: 0.1
+  id: labuildingpermits
+  description: "A tileset of building permits for the City of Los Angeles."
+  attribution: '<a href="https://allpointsburnes.com/" rel="noopener noreferrer" target="_blank">allpointsburnes</a>'
+  center: [-13179006.8104477, 4041573.81383156, 4]
+  maxzoom: 16
+  minzoom: 13
+  pixel_scale: 512
+  languages:
+    - en
+  defaults:
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+    datasource:
+      srid: 900913

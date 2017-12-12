@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "@mapbox/tilelive": "^5.12.6",
+    "@mapbox/tilelive-bridge": "^2.5.1",
+    "@mapbox/tilelive-omnivore": "^3.4.0",
+    "mbtiles": "^0.9.0"
+  },
+  "name": "permits-tilelive",
+  "version": "0.1.0",
+  "description": "Tilelive processor for permits data",
+  "main": "index.js",
+  "author": "andrew burnes",
+  "license": "MIT",
+  "private": false
+}

@@ -1,0 +1,63 @@
+version: '2'
+
+services:
+
+  postgres:
+    restart: always
+    image: mdillon/postgis:10
+    ports:
+      - "5432:5432"
+    env_file:
+      - $ENVIRONMENT.db.env
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  generate-tilesource:
+    image: openmaptiles/openmaptiles-tools
+    command: []
+    depends_on:
+      - postgres
+    env_file:
+      - $ENVIRONMENT.db.env
+    volumes:
+      - ./generate-tilesource:/usr/src/app
+      - ./data/raw:/data
+    working_dir: /usr/src/app
+    tty: true
+
+  mbview:
+    build: ./mbview
+    environment:
+      - MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data/raw:/data
+      - ./mbview:/usr/src/app
+    working_dir: /usr/src/app
+    tty: true
+
+  migrations:
+    build: ./migrations
+    depends_on:
+      - postgres
+    env_file:
+      - $ENVIRONMENT.db.env
+    volumes:
+      - ./migrations:/usr/src/app
+      - ./data/raw:/data
+    working_dir: /usr/src/app
+    tty: true
+
+  tilelive:
+    build: ./tilelive
+    command: []
+    depends_on:
+      - postgres
+    env_file:
+      - $ENVIRONMENT.db.env
+    volumes:
+      - ./tilelive:/usr/src/app
+      - ./data/raw:/data
+    working_dir: /usr/src/app
+    tty: true
